@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Send Message --> Raj Gaud</title>
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'><path d='M2.01 21L23 12 2.01 3 2 10l15 2-15 2z'/></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .pixelated {
+      image-rendering: -moz-crisp-edges;
+      image-rendering: -webkit-crisp-edges;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    /* --- Base & Font Setup --- */
+    body {
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background-color: #5f9ea0; /* Cadet Blue - Classic OS wallpaper color */
+      background-image:
+        linear-gradient(rgba(255,255,255,.07) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 2px, transparent 2px),
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+      background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
+    }
+    h1, h2, button, label {
+      font-family: 'Press Start 2P', cursive;
+      text-transform: uppercase;
+    }
+    
+    /* --- Main OS Window --- */
+    .os-window {
+      background-color: #c0c0c0; /* Classic grey */
+      border-top: 4px solid #ffffff;
+      border-left: 4px solid #ffffff;
+      border-right: 4px solid #000000;
+      border-bottom: 4px solid #000000;
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.5);
+      animation: boot-up 0.6s ease-out;
+    }
+    @keyframes boot-up {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .title-bar {
+      background: linear-gradient(to right, #000080, #1084d0); /* Classic blue gradient */
+      color: #ffffff;
+      padding: 6px 8px;
+      font-size: 16px;
+      text-shadow: 1px 1px #000;
+    }
+    .window-controls span, .window-controls a {
+        width: 24px;
+        height: 24px;
+        background-color: #c0c0c0;
+        border-top: 2px solid #ffffff;
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #000000;
+        border-bottom: 2px solid #000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .window-controls a:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+    }
+    .content-area {
+        border-top: 4px solid #000;
+    }
+
+    /* --- Form Elements Styling --- */
+    label { font-size: 14px; }
+    textarea {
+      background-color: #ffffff;
+      border: 2px solid #000;
+      box-shadow: inset 2px 2px 0px #808080;
+      color: #1a1a1a;
+      padding: 16px 12px;
+    }
+     #file-input-wrapper {
+      background-color: #ffffff;
+      border: 2px solid #000;
+      box-shadow: inset 2px 2px 0px #808080;
+      color: #1a1a1a;
+      padding: 12px; /* CORRECTED: Symmetrical padding */
+    }
+    textarea:focus, textarea:focus-visible {
+      outline: 2px solid #000080;
+    }
+
+    /* Custom File Input */
+    #file-input { display: none; }
+    #file-input-label {
+      background-color: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-right: 2px solid #000000;
+      border-bottom: 2px solid #000000;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 10px 16px;
+      transition: all 0.1s ease;
+    }
+    #file-input-label:active {
+      border-top: 2px solid #000;
+      border-left: 2px solid #000;
+      border-right: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+    }
+    .file-item { 
+      background-color: #fff;
+      padding: 0.25rem 0.5rem;
+      font-size: 16px; 
+      border: 1px solid #808080; 
+    }
+    .remove-file-btn { color: #808080; }
+    .remove-file-btn:hover { color: #ff0000; }
+
+    /* --- Submit Button --- */
+    #submitBtn {
+      background-color: #c0c0c0;
+      border-top: 4px solid #ffffff;
+      border-left: 4px solid #ffffff;
+      border-right: 4px solid #000000;
+      border-bottom: 4px solid #000000;
+      transition: all 0.1s ease-in-out;
+    }
+    #submitBtn:active {
+      border-top: 4px solid #000;
+      border-left: 4px solid #000;
+      border-right: 4px solid #fff;
+      border-bottom: 4px solid #fff;
+    }
+    #submitBtn:disabled {
+        color: #808080;
+        text-shadow: 1px 1px #fff;
+        cursor: not-allowed;
+    }
+    
+    /* --- Status Bar --- */
+    .status-bar {
+        margin: 2px;
+        padding: 4px 8px;
+        border: 2px solid #808080;
+        box-shadow: inset 2px 2px 0px #000;
+        min-height: 34px;
+    }
+    .status-success { color: #008000; }
+    .status-error { color: #ff0000; }
+
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <main class="os-window w-full max-w-2xl">
+    <div class="title-bar flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <svg class="pixelated" width="20" height="20" viewBox="0 0 16 16"><path fill="#fff" d="M0 2h16v12H0z"/><path fill="#c0c0c0" d="M1 3h14v10H1z"/><path fill="#fff" d="M2 4h12v1H2zm0 2h12v1H2zm0 2h12v1H2zm0 2h12v1H2z"/><path fill="#008080" d="M3 5h10v1H3zm0 2h10v1H3zm0 2h10v1H3z"/></svg>
+        <h3 id="ip-title">Loading IP...</h3>
+      </div>
+      <div class="window-controls flex space-x-1">
+        <a href="https://rajgaud.com" target="_blank" rel="noopener noreferrer" title="My Personal Website">
+            <svg class="pixelated" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+            </svg>
+        </a>
+        <a href="https://github.com/rajgaudev" target="_blank" rel="noopener noreferrer" title="My GitHub Profile">
+           <svg class="pixelated" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 16 16">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+           </svg>
+        </a>
+        <a href="https://www.linkedin.com/in/rajgaud/" target="_blank" rel="noopener noreferrer" title="My LinkedIn Profile">
+          <svg class="pixelated" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#000000" viewBox="0 0 16 16">
+            <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.327 0-1.938.721-2.268 1.258h.018V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    
+    <div class="p-4 content-area">
+      <form id="contactForm" class="space-y-4">
+        <div>
+          <label for="message" class="block mb-2 text-sm">Message:</label>
+          <textarea name="message" id="message" rows="6" required class="w-full resize-y"></textarea>
+        </div>
+        <div>
+          <label class="block mb-2 text-sm">Attachments:</label>
+          <div id="file-input-wrapper" class="flex flex-col gap-2">
+            <label for="file-input" id="file-input-label" class="inline-block self-start">Add File...</label>
+            <input type="file" name="files[]" id="file-input" multiple />
+            <div id="file-list-container" class="w-full space-y-1 text-sm"></div>
+          </div>
+        </div>
+        <div class="pt-2">
+          <button id="submitBtn" type="submit" class="w-full py-3 text-base">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="status-bar">
+      <p id="status-text" class="text-sm font-semibold"></p>
+    </div>
+  </main>
+  
+  <script>
+    // --- IP Address Fetching Logic ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const ipTitleElement = document.getElementById('ip-title');
+        fetch('https://api.ipify.org?format=json')
+            .then(response => {
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                return response.json();
+            })
+            .then(data => {
+                ipTitleElement.textContent = `Your IP: ${data.ip}`;
+            })
+            .catch(error => {
+                console.error('Error fetching IP address:', error);
+                ipTitleElement.textContent = 'System Command'; // Fallback title
+            });
+    });
+
+    // --- File Handling Logic (Unchanged) ---
+    const fileInput = document.getElementById('file-input');
+    const fileListContainer = document.getElementById('file-list-container');
+    let fileStore = new DataTransfer();
+    
+    fileInput.addEventListener('change', () => {
+        for (const file of fileInput.files) { fileStore.items.add(file); }
+        fileInput.files = fileStore.files;
+        renderFileList();
+    });
+    
+    function renderFileList() {
+        fileListContainer.innerHTML = '';
+        if (fileStore.files.length === 0) return;
+        
+        Array.from(fileStore.files).forEach((file, index) => {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item flex justify-between items-center';
+            const fileName = document.createElement('span');
+            fileName.textContent = file.name.length > 30 ? file.name.substring(0, 27) + '...' : file.name;
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-file-btn font-bold px-2 text-lg';
+            removeBtn.textContent = 'x';
+            removeBtn.onclick = () => removeFile(index);
+            fileItem.appendChild(fileName);
+            fileItem.appendChild(removeBtn);
+            fileListContainer.appendChild(fileItem);
+        });
+    }
+    
+    function removeFile(index) {
+        const newFileStore = new DataTransfer();
+        const currentFiles = Array.from(fileStore.files);
+        currentFiles.forEach((file, i) => { if (i !== index) newFileStore.items.add(file); });
+        fileStore = newFileStore;
+        fileInput.files = fileStore.files;
+        renderFileList();
+    }
+    
+    // --- AJAX Form Submission Logic ---
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const statusText = document.getElementById('status-text');
+
+    function showStatus(message, isSuccess) {
+        statusText.textContent = message;
+        statusText.className = isSuccess ? 'status-success' : 'status-error';
+    }
+    
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Sending...';
+        showStatus('Connecting to server...', true);
+        
+        const formData = new FormData(form);
+        
+        try {
+            // IMPORTANT: This form still points to 'send.php'. 
+            // You will need a backend script at this URL to process the data.
+            const response = await fetch('send.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.status === 'success') {
+                showStatus("Success! " + result.message, true);
+                form.reset();
+                fileStore = new DataTransfer();
+                fileInput.files = fileStore.files;
+                renderFileList();
+            } else {
+                throw new Error(result.message || 'Submission failed.');
+            }
+        } catch (error) {
+            showStatus("Error: " + error.message, false);
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Submit';
+        }
+    });
+  </script>
+</body>
+</html>
